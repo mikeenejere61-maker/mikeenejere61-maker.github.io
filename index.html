@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Michael Ejike Enejere, Fraud & Financial Crime Data Analyst. Interactive data portfolio.">
+<title>Michael Enejere Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: single column case-file; each project a numbered exhibit with its own filter bar, KPI strip, charts, then findings */
+:root{
+  --bg:#F3F6F5; --surface:#FFFFFF; --ink:#13201E; --muted:#5A6B68; --line:#D6DFDC;
+  --accent:#0E6B60; --accent-soft:#DCEFEB; --flag:#C2410C; --flag-soft:#FBE7DC; --good:#15803D;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0F1716; --surface:#16211F; --ink:#E4ECEA; --muted:#93A6A2; --line:#2A3835;
+  --accent:#4FC3B2; --accent-soft:#18332F; --flag:#F59A6B; --flag-soft:#3A2419; --good:#4ADE80; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F1716; --surface:#16211F; --ink:#E4ECEA; --muted:#93A6A2; --line:#2A3835;
+  --accent:#4FC3B2; --accent-soft:#18332F; --flag:#F59A6B; --flag-soft:#3A2419; --good:#4ADE80; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 var(--body);margin:0}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:40px 56px;display:flex;flex-direction:column;gap:56px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.1}
+h1{font-size:clamp(2.2rem,6vw,3.6rem);font-weight:700;letter-spacing:-.02em}
+h2{font-size:clamp(1.5rem,3.6vw,2.1rem);font-weight:700}
+h3{font-size:1.05rem;font-weight:600;font-family:var(--body)}
+p{margin:0;max-width:68ch}
+.label{font:600 .72rem/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* hero */
+header{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:32px;align-items:end;border-bottom:2px solid var(--ink);padding-bottom:28px}
+.roles{color:var(--accent);font:600 1.1rem/1.4 var(--body);margin-top:10px}
+.intro{margin-top:16px;color:var(--ink)}
+.contact{display:flex;flex-direction:column;gap:10px;font-family:var(--mono);font-size:.88rem}
+.contact div{display:flex;justify-content:space-between;gap:12px;border-bottom:1px dashed var(--line);padding-bottom:8px;min-width:0}
+.contact span:last-child{text-align:right;word-break:break-all}
+.copy{font:600 .72rem var(--mono);background:var(--accent-soft);color:var(--accent);border:0;border-radius:4px;padding:4px 8px;cursor:pointer;white-space:nowrap}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:28px}
+.stats div{background:var(--surface);padding:14px 16px}
+.stats b{display:block;font:700 1.5rem var(--display)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.chip{font:500 .8rem var(--mono);border:1px solid var(--line);background:var(--surface);padding:5px 10px;border-radius:999px}
+nav{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:-28px}
+nav a{font:600 .85rem var(--mono);text-decoration:none}
+
+/* exhibits */
+section{display:flex;flex-direction:column;gap:20px;scroll-margin-top:16px}
+.ex-head{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap}
+.ex-tag{font:600 .75rem var(--mono);color:var(--flag);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+.tools{display:flex;flex-wrap:wrap;gap:6px}
+.tools span{font:.72rem var(--mono);color:var(--muted);border:1px solid var(--line);padding:3px 7px;border-radius:3px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:20px;display:flex;flex-direction:column;gap:20px;min-width:0}
+.filter{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+select{font:600 .9rem var(--body);padding:7px 10px;border:1px solid var(--line);border-radius:4px;background:var(--bg);color:var(--ink)}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.kpi{border-left:3px solid var(--accent);padding:2px 0 2px 12px}
+.kpi.warn{border-color:var(--flag)}
+.kpi b{display:block;font:700 1.45rem var(--display);font-variant-numeric:tabular-nums}
+.kpi span{font-size:.82rem;color:var(--muted)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.chart{display:flex;flex-direction:column;gap:8px;min-width:0}
+.chart .box{position:relative;height:240px}
+.find{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.find div{border-top:2px solid var(--ink);padding-top:10px;font-size:.95rem}
+.find b{display:block;font:700 1.25rem var(--display);color:var(--accent)}
+.find .f b{color:var(--flag)}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font:.82rem var(--mono);font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);white-space:pre}
+th{color:var(--muted);font-weight:600;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em}
+td.bad{background:var(--flag-soft);color:var(--flag)}
+td.ok{background:var(--accent-soft);color:var(--accent)}
+.cm{display:grid;grid-template-columns:auto 1fr 1fr;gap:4px;font-family:var(--mono);font-size:.82rem;max-width:420px}
+.cm div{padding:12px;text-align:center;background:var(--bg)}
+.cm .h{background:none;color:var(--muted);font-size:.72rem}
+.cm .tp{background:var(--accent-soft);color:var(--accent);font-weight:600}
+.cm .fn{background:var(--flag-soft);color:var(--flag);font-weight:600}
+.metric-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.note{font-size:.85rem;color:var(--muted)}
+footer{border-top:2px solid var(--ink);padding-top:24px;display:flex;flex-direction:column;gap:12px}
+@media (max-width:760px){
+  header{grid-template-columns:1fr}
+  .stats,.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .grid2,.find,.metric-row{grid-template-columns:1fr}
+  nav{margin-top:-36px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+<header>
+  <div>
+    <div class="label">Data Portfolio</div>
+    <h1 style="margin-top:10px">Michael Ejike Enejere</h1>
+    <div class="roles">Fraud &amp; Financial Crime Data Analyst · Data Analytics · Data Entry</div>
+    <p class="intro">25+ years fighting fraud with data. In the Nigeria Police I rose to Assistant Superintendent and spent four years as Head of Crime Statistics for the Anambra State Police Command, running the state's crime data, alongside years investigating and prosecuting fraud at the Force CID. Then five years in fraud recovery at United Bank for Africa (UBA), a pan-African bank in 20 African countries plus the UK, US and France, where I recovered over ₦1.5 billion in the Vericash fraud case alone. Now working remotely with international teams. I clean messy records, build dashboards decision-makers can read at a glance, and use Python models to find patterns people miss. Lawyer by training, so accuracy and data privacy come as standard.</p>
+  </div>
+  <div class="contact">
+    <div><span>Email</span><span>mikeenejere8@gmail.com</span></div>
+    <div><span>Phone / WhatsApp</span><span>+234 803 679 6915</span></div>
+    <div><span>LinkedIn</span><span><a href="https://www.linkedin.com/in/michael-enejere-2060a2448" target="_blank" rel="noopener">michael-enejere-2060a2448</a></span></div>
+    <div><span>Location</span><span>Lagos, Nigeria · GMT+1</span></div>
+    <div><span>Availability</span><span>Immediately · Remote · Contract or full-time</span></div>
+    <div><span>Hours overlap</span><span>Full UK/EU day · US East mornings</span></div>
+    <button class="copy" id="copyEmail" type="button">Copy email</button>
+  </div>
+</header>
+
+<div>
+  <div class="stats">
+    <div><b class="mono">25+ yrs</b><span class="note">fraud &amp; crime data experience</span></div>
+    <div><b class="mono">₦1.5bn+</b><span class="note">recovered in a single fraud case</span></div>
+    <div><b class="mono">95k+</b><span class="note">records cleaned and analysed</span></div>
+    <div><b class="mono">5</b><span class="note">core tools: Excel, SQL, Power BI, Tableau, Python</span></div>
+  </div>
+  <div class="chips">
+    <span class="chip">Excel &amp; Power Query</span><span class="chip">SQL (SQLite / PostgreSQL)</span><span class="chip">Power BI / DAX</span><span class="chip">Tableau</span><span class="chip">Python · pandas</span><span class="chip">scikit-learn</span><span class="chip">Data validation</span><span class="chip">Dashboard design</span><span class="chip">NDPA / GDPR</span><span class="chip">AI-assisted analysis</span>
+  </div>
+</div>
+
+<nav aria-label="Projects">
+  <a href="#fraud">01 Fraud analytics dashboard</a>
+  <a href="#cleaning">02 Data cleaning &amp; entry</a>
+  <a href="#sales">03 Retail sales dashboard</a>
+  <a href="#model">04 Fraud detection model</a>
+</nav>
+
+<!-- 1 FRAUD -->
+<section id="fraud">
+  <div class="ex-head">
+    <div><div class="ex-tag">Project 01 · Data Analytics</div><h2>Bank Fraud Analytics Dashboard</h2></div>
+    <div class="tools"><span>Python</span><span>pandas</span><span>KPI design</span><span>Interactive charts</span></div>
+  </div>
+  <p>60,000 card, transfer, POS and USSD transactions over 12 months. The question a bank's fraud team asks every week: where is fraud coming from, when does it happen, and how much are we getting back? Pick a channel to filter every chart.</p>
+  <div class="panel">
+    <div class="filter"><label class="label" for="fraudChannel">Channel</label><select id="fraudChannel"></select></div>
+    <div class="kpis" id="fraudKpis"></div>
+    <div class="grid2">
+      <div class="chart"><h3>Fraud cases per month</h3><div class="box"><canvas id="fMonthly"></canvas></div></div>
+      <div class="chart"><h3>Money lost vs recovered (₦ millions)</h3><div class="box"><canvas id="fMoney"></canvas></div></div>
+      <div class="chart"><h3>Fraud rate by hour of day (%)</h3><div class="box"><canvas id="fHour"></canvas></div></div>
+      <div class="chart"><h3>Fraud rate by transaction size (%)</h3><div class="box"><canvas id="fBand"></canvas></div></div>
+    </div>
+  </div>
+  <div class="find" id="fraudFind"></div>
+</section>
+
+<!-- 2 CLEANING -->
+<section id="cleaning">
+  <div class="ex-head">
+    <div><div class="ex-tag">Project 02 · Data Entry &amp; Cleaning</div><h2>Customer Records Clean-Up</h2></div>
+    <div class="tools"><span>Python</span><span>pandas</span><span>Regex</span><span>Data validation</span></div>
+  </div>
+  <p>A 5,300-row customer file with the problems every real database has: shouting capitals, stray spaces, six ways to write "Lagos", phone numbers in four formats, mixed date styles, money stored as text, and duplicates. I built a repeatable cleaning pipeline, then checked every fixed value against the original source.</p>
+  <div class="panel">
+    <div class="kpis" id="cleanKpis"></div>
+    <div class="grid2">
+      <div class="chart"><h3>Problems found, by type</h3><div class="box" style="height:280px"><canvas id="cIssues"></canvas></div></div>
+      <div class="chart"><h3>Valid values by field, before vs after (%)</h3><div class="box" style="height:280px"><canvas id="cQuality"></canvas></div></div>
+    </div>
+    <div class="chart"><h3>Before</h3><div class="tbl"><table id="tRaw"></table></div></div>
+    <div class="chart"><h3>After</h3><div class="tbl"><table id="tClean"></table></div></div>
+  </div>
+  <div class="find" id="cleanFind"></div>
+</section>
+
+<!-- 3 SALES -->
+<section id="sales">
+  <div class="ex-head">
+    <div><div class="ex-tag">Project 03 · Business Analytics</div><h2>Retail Sales Performance Dashboard</h2></div>
+    <div class="tools"><span>SQL</span><span>Python</span><span>pandas</span><span>Dashboard design</span></div>
+  </div>
+  <p>30,600 orders from a six-city Nigerian retailer across five product categories. Built for a sales director who wants to know which cities and categories drive revenue and how the year is trending. Pick a region to filter.</p>
+  <div class="panel">
+    <div class="filter"><label class="label" for="salesRegion">Region</label><select id="salesRegion"></select></div>
+    <div class="kpis" id="salesKpis"></div>
+    <div class="chart"><h3>Monthly revenue (₦ millions)</h3><div class="box"><canvas id="sMonthly"></canvas></div></div>
+    <div class="grid2">
+      <div class="chart"><h3>Revenue by category (₦ millions)</h3><div class="box"><canvas id="sCat"></canvas></div></div>
+      <div class="chart"><h3>Revenue by region (₦ millions)</h3><div class="box"><canvas id="sReg"></canvas></div></div>
+    </div>
+  </div>
+  <div class="find" id="salesFind"></div>
+  <div class="panel">
+    <div><h3>The SQL behind it</h3><p class="note" style="margin-top:4px">Real queries run against the project data, with their actual output. Window functions, CTEs and conditional aggregation.</p></div>
+    <div id="sqlBlocks" style="display:flex;flex-direction:column;gap:24px"></div>
+  </div>
+</section>
+
+<!-- 4 MODEL -->
+<section id="model">
+  <div class="ex-head">
+    <div><div class="ex-tag">Project 04 · Data Science</div><h2>Fraud Detection Model</h2></div>
+    <div class="tools"><span>Python</span><span>scikit-learn</span><span>Logistic Regression</span><span>Random Forest</span></div>
+  </div>
+  <p>Using the Project 01 transactions, I trained two machine-learning models to score each transaction for fraud risk. Fraud teams can only review a small share of transactions, so I tested the models on a realistic budget: review the riskiest 5% and see how much fraud that catches. Models were trained on 75% of the data and tested on the 15,000 transactions they had never seen.</p>
+  <div class="panel">
+    <div class="kpis" id="modelKpis"></div>
+    <div class="grid2">
+      <div class="chart"><h3>What drives fraud risk (feature importance, %)</h3><div class="box" style="height:260px"><canvas id="mImp"></canvas></div></div>
+      <div class="chart"><h3 id="cmTitle">Results on test data</h3><div class="cm" id="cm"></div>
+        <p class="note">Reviewing 5% of transactions, the model catches about 4 in 10 frauds. Random selection of the same 5% would catch 1 in 20.</p>
+        <div class="tbl"><table id="tModels"></table></div>
+      </div>
+    </div>
+  </div>
+  <div class="find" id="modelFind"></div>
+</section>
+
+<footer>
+  <div class="label">Get in touch</div>
+  <h2>Looking for a reliable remote data analyst?</h2>
+  <p>I am available immediately for full-time, part-time or contract roles in data entry, data analysis, analytics and data science. Email <span class="mono">mikeenejere8@gmail.com</span> or call/WhatsApp <span class="mono">+234 803 679 6915</span>.</p>
+  <p class="note">All four projects use simulated datasets modelled on real-world patterns, so no customer or company data is exposed. Download the datasets: <a href="data/fraud_transactions.csv">fraud transactions</a> · <a href="data/customers_raw.csv">raw customers</a> · <a href="data/customers_clean.csv">cleaned customers</a> · <a href="data/retail_sales.csv">retail sales</a>. Code available on request.</p>
+</footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+const D = {"fraud": {"views": {"All channels": {"kpi": {"txns": 60000, "value": 1957914830.0, "fraud": 862, "rate": 1.4366666666666665, "fraud_value": 42928450.0, "recovered": 23113053.260131784, "recovery_rate": 53.84087536384795}, "monthly_fraud": [59, 58, 73, 55, 69, 74, 79, 70, 68, 73, 85, 99], "monthly_rate": [1.182, 1.27, 1.438, 1.107, 1.373, 1.46, 1.533, 1.347, 1.367, 1.454, 1.767, 1.925], "monthly_fv": [4.17, 1.78, 4.15, 4.48, 3.48, 2.2, 3.7, 4.03, 4.25, 2.11, 4.12, 4.45], "monthly_rv": [2.41, 0.99, 2.53, 1.94, 1.93, 1.07, 2.0, 2.19, 2.55, 1.13, 2.09, 2.28], "hourly_rate": [4.407, 4.852, 7.551, 5.703, 6.532, 0.877, 1.38, 1.0, 1.163, 1.059, 1.253, 1.269, 1.16, 0.92, 1.183, 1.096, 1.13, 1.333, 1.209, 1.307, 1.054, 0.831, 0.511, 4.493], "band_rate": [1.247, 1.372, 1.831, 3.789, 4.167]}, "Mobile App": {"kpi": {"txns": 20344, "value": 658373670.0, "fraud": 202, "rate": 0.9929217459693276, "fraud_value": 10394810.0, "recovered": 5551636.547028862, "recovery_rate": 53.40777317746897}, "monthly_fraud": [10, 12, 19, 13, 20, 17, 18, 13, 18, 13, 22, 27], "monthly_rate": [0.591, 0.791, 1.084, 0.75, 1.181, 1.023, 1.062, 0.726, 1.067, 0.774, 1.351, 1.49], "monthly_fv": [0.42, 0.56, 1.84, 1.36, 0.61, 0.47, 0.99, 0.68, 0.49, 0.34, 0.81, 1.82], "monthly_rv": [0.19, 0.28, 1.14, 0.54, 0.32, 0.21, 0.65, 0.45, 0.26, 0.18, 0.37, 0.96], "hourly_rate": [3.646, 4.183, 4.663, 5.028, 5.229, 0.83, 1.167, 0.956, 1.043, 0.93, 0.672, 0.682, 0.917, 0.302, 0.672, 0.665, 0.932, 0.88, 0.962, 0.694, 0.128, 0.143, 0.437, 3.133], "band_rate": [0.739, 1.008, 1.379, 2.786, 0.0]}, "USSD": {"kpi": {"txns": 10732, "value": 358635320.0, "fraud": 175, "rate": 1.630637346254193, "fraud_value": 9336070.0, "recovered": 4740704.943877563, "recovery_rate": 50.77837830990516}, "monthly_fraud": [12, 10, 10, 15, 12, 14, 18, 21, 12, 15, 17, 19], "monthly_rate": [1.325, 1.164, 1.148, 1.72, 1.357, 1.554, 1.854, 2.308, 1.333, 1.667, 1.993, 2.099], "monthly_fv": [0.98, 0.3, 0.53, 1.45, 0.67, 0.47, 0.89, 1.27, 0.82, 0.27, 1.04, 0.64], "monthly_rv": [0.36, 0.17, 0.36, 0.67, 0.3, 0.24, 0.5, 0.91, 0.32, 0.14, 0.41, 0.37], "hourly_rate": [2.083, 4.237, 11.688, 3.846, 5.952, 0.84, 0.99, 0.0, 1.095, 2.68, 0.986, 0.597, 1.697, 1.942, 1.362, 1.903, 1.887, 1.094, 1.27, 1.117, 1.22, 1.124, 0.806, 6.452], "band_rate": [1.447, 1.459, 2.086, 5.97, 0.0]}, "POS": {"kpi": {"txns": 12022, "value": 394732760.0, "fraud": 147, "rate": 1.222758276493096, "fraud_value": 7421180.0, "recovered": 4061448.910865303, "recovery_rate": 54.72780488905138}, "monthly_fraud": [12, 9, 12, 12, 13, 9, 11, 16, 10, 11, 16, 16], "monthly_rate": [1.244, 1.004, 1.198, 1.196, 1.236, 0.894, 1.076, 1.522, 0.988, 1.063, 1.693, 1.55], "monthly_fv": [1.28, 0.28, 0.49, 0.36, 1.08, 0.17, 0.63, 1.46, 0.37, 0.45, 0.4, 0.45], "monthly_rv": [0.89, 0.14, 0.21, 0.16, 0.63, 0.08, 0.34, 0.57, 0.24, 0.26, 0.28, 0.25], "hourly_rate": [4.188, 6.962, 5.357, 5.263, 6.667, 0.758, 1.311, 0.613, 1.522, 0.498, 1.258, 1.172, 0.604, 0.501, 1.267, 0.623, 0.77, 1.617, 1.046, 0.885, 0.929, 0.508, 0.352, 3.361], "band_rate": [1.11, 1.081, 1.723, 3.167, 0.0]}, "Web Card": {"kpi": {"txns": 7347, "value": 233646980.0, "fraud": 245, "rate": 3.3346944331019466, "fraud_value": 8864820.0, "recovered": 4447411.271490708, "recovery_rate": 50.16922251653963}, "monthly_fraud": [19, 20, 25, 12, 18, 26, 22, 14, 22, 23, 18, 26], "monthly_rate": [3.084, 3.604, 3.743, 2.069, 2.965, 4.044, 3.667, 2.154, 3.642, 3.588, 3.015, 4.437], "monthly_fv": [1.29, 0.31, 0.75, 0.29, 0.96, 0.85, 0.9, 0.39, 0.47, 0.7, 1.07, 0.88], "monthly_rv": [0.89, 0.16, 0.45, 0.12, 0.58, 0.42, 0.33, 0.16, 0.25, 0.34, 0.36, 0.38], "hourly_rate": [10.0, 9.756, 19.118, 16.071, 16.667, 2.128, 1.695, 2.41, 1.891, 1.19, 4.176, 4.545, 2.794, 1.67, 2.11, 2.79, 1.751, 3.795, 2.532, 3.636, 3.385, 2.672, 1.156, 9.15], "band_rate": [3.239, 3.225, 3.598, 6.202, 0.0]}, "ATM": {"kpi": {"txns": 5937, "value": 190821460.0, "fraud": 41, "rate": 0.6905844702711808, "fraud_value": 1939140.0, "recovered": 1132859.9119922933, "recovery_rate": 58.42073867757321}, "monthly_fraud": [4, 4, 2, 2, 1, 3, 4, 5, 1, 4, 5, 6], "monthly_rate": [0.771, 0.857, 0.411, 0.414, 0.207, 0.538, 0.739, 1.048, 0.213, 0.846, 1.08, 1.163], "monthly_fv": [0.14, 0.17, 0.21, 0.37, 0.09, 0.03, 0.11, 0.21, 0.0, 0.11, 0.09, 0.42], "monthly_rv": [0.05, 0.13, 0.1, 0.26, 0.05, 0.02, 0.08, 0.1, 0.0, 0.08, 0.04, 0.21], "hourly_rate": [5.941, 1.389, 1.852, 2.083, 0.0, 0.0, 1.504, 0.41, 0.59, 0.0, 0.532, 0.265, 0.528, 1.13, 1.015, 0.513, 0.509, 0.255, 0.84, 1.003, 0.81, 0.478, 0.0, 0.0], "band_rate": [0.488, 0.664, 1.263, 0.98, 0.0]}, "Internet Banking": {"kpi": {"txns": 3618, "value": 121704640.0, "fraud": 52, "rate": 1.4372581536760642, "fraud_value": 4972430.0, "recovered": 3178991.6748770517, "recovery_rate": 63.932356511344594}, "monthly_fraud": [2, 3, 5, 1, 5, 5, 6, 1, 5, 7, 7, 5], "monthly_rate": [0.68, 1.103, 1.678, 0.336, 1.629, 1.684, 1.852, 0.315, 1.661, 2.381, 2.16, 1.712], "monthly_fv": [0.06, 0.16, 0.33, 0.65, 0.08, 0.21, 0.17, 0.01, 2.1, 0.24, 0.72, 0.25], "monthly_rv": [0.02, 0.11, 0.27, 0.19, 0.04, 0.11, 0.09, 0.0, 1.48, 0.13, 0.64, 0.11], "hourly_rate": [5.66, 0.0, 7.692, 2.857, 4.545, 0.0, 3.333, 3.205, 0.433, 0.424, 0.851, 1.653, 0.415, 0.844, 1.724, 0.441, 1.01, 0.897, 1.01, 2.105, 1.205, 1.587, 0.0, 7.692], "band_rate": [1.114, 1.542, 1.365, 4.286, 50.0]}}, "bands": ["< ₦10k", "₦10k–50k", "₦50k–200k", "₦200k–1m", "> ₦1m"], "channel_rank": [{"channel": "Web Card", "rate": 3.335, "fv": 8.86}, {"channel": "USSD", "rate": 1.631, "fv": 9.34}, {"channel": "Internet Banking", "rate": 1.437, "fv": 4.97}, {"channel": "POS", "rate": 1.223, "fv": 7.42}, {"channel": "Mobile App", "rate": 0.993, "fv": 10.39}, {"channel": "ATM", "rate": 0.691, "fv": 1.94}], "night_rate": 5.241, "day_rate": 1.131, "newdev_rate": 9.052, "olddev_rate": 0.789, "young_rate": 4.602, "old_rate": 1.354}, "model": {"models": {"Logistic Regression": {"auc": 0.81, "precision": 11.9, "recall": 41.2, "f1": 0.184, "cm": [14123, 661, 127, 89]}, "Random Forest": {"auc": 0.811, "precision": 11.6, "recall": 40.3, "f1": 0.18, "cm": [14121, 663, 129, 87]}}, "best": "Random Forest", "importance": {"New device": 41.3, "Time of day": 18.7, "Amount": 11.9, "Channel": 10.3, "Account age": 7.7, "Txns in last 24h": 7.2, "Month / season": 2.9}, "test_size": 15000, "test_fraud": 216, "base_rate": 1.44, "alert_budget": 5}, "cleaning": {"raw_rows": 5300, "clean_rows": 5000, "dup_removed": 300, "issues": {"Inconsistent name casing": 886, "Stray whitespace": 322, "Non-standard state names": 1479, "Mixed phone formats": 1694, "Missing emails": 349, "Invalid emails": 147, "Mixed date formats": 779, "Currency stored as text": 256, "Duplicate records": 300}, "quality_before": 70.2, "quality_after": 98.4, "q_before": {"name": 72.5, "state": 70.5, "phone": 8.5, "email": 90.3, "dob": 84.4, "balance": 94.9}, "q_after": {"name": 100.0, "state": 100.0, "phone": 100.0, "email": 90.3, "dob": 100.0, "balance": 100.0}, "accuracy": {"first": 100.0, "last": 100.0, "state": 100.0, "dob": 100.0, "phone": 100.0, "balance": 100.0}, "follow_up": 485, "sample_raw": [["CUS14386", "FUNKE", "  Danjuma ", "PH", "08024039409", "06/04/1976", "8056.86"], ["CUS10070", "KEMI", "  Adeyemi ", "abuja", "08033893024", "07/05/1969", "822.41"], ["CUS11949", "YUSUF", "  Ibe ", "Lagos", "08047819340", "03/09/2000", "₦135,123.57"], ["CUS14122", "KEMI", "  Ibe ", "Oyo State", "08099184039", "01/03/1991", "45056.95"]], "sample_clean": [["CUS14386", "Funke", "Danjuma", "Rivers", "+2348024039409", "1976-04-06", "8,056.86"], ["CUS10070", "Kemi", "Adeyemi", "Abuja FCT", "+2348033893024", "1969-05-07", "822.41"], ["CUS11949", "Yusuf", "Ibe", "Lagos", "+2348047819340", "2000-09-03", "135,123.57"], ["CUS14122", "Kemi", "Ibe", "Oyo", "+2348099184039", "1991-03-01", "45,056.95"]]}, "sales": {"views": {"All regions": {"kpi": {"revenue": 4139616833.33, "orders": 30626, "aov": 135166.7482965454, "units": 61106}, "monthly": [323.42, 269.69, 293.07, 349.5, 316.55, 328.67, 345.46, 324.84, 342.63, 349.93, 411.43, 484.42], "by_cat": {"Phones & Tablets": 2600.24, "Home Appliances": 929.09, "Groceries": 276.27, "Fashion": 246.79, "Health & Beauty": 87.23}, "by_region": {"Lagos": 1398.96, "Abuja": 746.67, "Port Harcourt": 588.5, "Ibadan": 509.58, "Kano": 488.99, "Enugu": 406.91}}, "Lagos": {"kpi": {"revenue": 1398960635.84, "orders": 10330, "aov": 135426.97345982573, "units": 20528}, "monthly": [107.03, 97.29, 100.79, 123.92, 106.0, 111.14, 108.56, 116.11, 112.11, 117.5, 139.96, 158.54], "by_cat": {"Phones & Tablets": 884.54, "Home Appliances": 310.73, "Groceries": 90.2, "Fashion": 83.65, "Health & Beauty": 29.84}, "by_region": {"Lagos": 1398.96}}, "Abuja": {"kpi": {"revenue": 746674905.6200001, "orders": 5574, "aov": 133956.74661284537, "units": 11117}, "monthly": [57.91, 47.03, 55.36, 58.24, 58.69, 59.24, 63.98, 64.21, 59.35, 64.8, 68.14, 89.72], "by_cat": {"Phones & Tablets": 465.07, "Home Appliances": 168.65, "Groceries": 51.7, "Fashion": 45.32, "Health & Beauty": 15.95}, "by_region": {"Abuja": 746.67}}, "Port Harcourt": {"kpi": {"revenue": 588501787.58, "orders": 4327, "aov": 136006.8841183268, "units": 8679}, "monthly": [45.51, 38.5, 37.82, 45.13, 44.41, 47.42, 55.48, 41.07, 43.88, 50.45, 65.34, 73.5], "by_cat": {"Phones & Tablets": 369.78, "Home Appliances": 131.68, "Groceries": 38.96, "Fashion": 36.48, "Health & Beauty": 11.61}, "by_region": {"Port Harcourt": 588.5}}, "Kano": {"kpi": {"revenue": 488992078.75, "orders": 3663, "aov": 133494.97099372098, "units": 7338}, "monthly": [39.08, 30.08, 35.4, 45.51, 38.24, 39.77, 44.58, 34.97, 42.5, 36.9, 49.68, 52.29], "by_cat": {"Phones & Tablets": 306.48, "Home Appliances": 109.99, "Groceries": 33.59, "Fashion": 28.0, "Health & Beauty": 10.93}, "by_region": {"Kano": 488.99}}, "Ibadan": {"kpi": {"revenue": 509581327.89, "orders": 3649, "aov": 139649.58286927926, "units": 7304}, "monthly": [43.72, 34.87, 36.74, 42.67, 37.94, 35.79, 40.47, 41.52, 41.71, 43.22, 49.12, 61.82], "by_cat": {"Phones & Tablets": 315.06, "Home Appliances": 122.77, "Groceries": 33.78, "Fashion": 28.1, "Health & Beauty": 9.88}, "by_region": {"Ibadan": 509.58}}, "Enugu": {"kpi": {"revenue": 406906097.65000004, "orders": 3083, "aov": 131983.81370418426, "units": 6140}, "monthly": [30.17, 21.92, 26.96, 34.02, 31.26, 35.31, 32.39, 26.97, 43.09, 37.07, 39.19, 48.55], "by_cat": {"Phones & Tablets": 259.3, "Home Appliances": 85.28, "Groceries": 28.04, "Fashion": 25.24, "Health & Beauty": 9.04}, "by_region": {"Enugu": 406.91}}}, "best_month": 12, "worst_month": 2, "q4_share": 30.1, "disc_aov": 128585.0, "nodisc_aov": 138461.0}, "sql": [{"title": "Fraud rate and losses by channel", "sql": "SELECT channel,\n       COUNT(*)                                   AS txns,\n       SUM(is_fraud)                              AS fraud_cases,\n       ROUND(100.0 * SUM(is_fraud) / COUNT(*), 2) AS fraud_rate_pct,\n       ROUND(SUM(fraud_value) / 1e6, 2)           AS lost_ngn_m,\n       ROUND(100.0 * SUM(recovered_value) / SUM(fraud_value), 1) AS recovered_pct\nFROM transactions\nGROUP BY channel\nORDER BY fraud_rate_pct DESC;", "cols": ["channel", "txns", "fraud_cases", "fraud_rate_pct", "lost_ngn_m", "recovered_pct"], "rows": [["Web Card", "7347", "245", "3.33", "8.86", "50.2"], ["USSD", "10732", "175", "1.63", "9.34", "50.8"], ["Internet Banking", "3618", "52", "1.44", "4.97", "63.9"], ["POS", "12022", "147", "1.22", "7.42", "54.7"], ["Mobile App", "20344", "202", "0.99", "10.39", "53.4"], ["ATM", "5937", "41", "0.69", "1.94", "58.4"]]}, {"title": "Does discounting change order value? (by category, ₦ thousands)", "sql": "SELECT category,\n       ROUND(AVG(CASE WHEN discount = 0 THEN revenue END) / 1e3, 1) AS full_price_aov_k,\n       ROUND(AVG(CASE WHEN discount > 0 THEN revenue END) / 1e3, 1) AS discounted_aov_k,\n       ROUND(100.0 * SUM(CASE WHEN discount > 0 THEN 1 ELSE 0 END) / COUNT(*), 1) AS pct_orders_discounted\nFROM sales\nGROUP BY category\nORDER BY full_price_aov_k DESC;", "cols": ["category", "full_price_aov_k", "discounted_aov_k", "pct_orders_discounted"], "rows": [["Phones & Tablets", "393.5", "366.7", "33.4"], ["Home Appliances", "199.6", "185.5", "33.1"], ["Fashion", "46.4", "43.2", "33.3"], ["Groceries", "30.6", "28.3", "33.8"], ["Health & Beauty", "20.5", "18.5", "32.6"]]}, {"title": "Month-on-month revenue growth", "sql": "WITH m AS (\n  SELECT month, SUM(revenue) AS rev FROM sales GROUP BY month\n)\nSELECT month,\n       ROUND(rev / 1e6, 1) AS revenue_ngn_m,\n       ROUND(100.0 * (rev - LAG(rev) OVER (ORDER BY month))\n             / LAG(rev) OVER (ORDER BY month), 1) AS mom_growth_pct\nFROM m ORDER BY month;", "cols": ["month", "revenue_ngn_m", "mom_growth_pct"], "rows": [["1", "323.4", "—"], ["2", "269.7", "-16.6"], ["3", "293.1", "8.7"], ["4", "349.5", "19.3"], ["5", "316.5", "-9.4"], ["6", "328.7", "3.8"], ["7", "345.5", "5.1"], ["8", "324.8", "-6.0"], ["9", "342.6", "5.5"], ["10", "349.9", "2.1"], ["11", "411.4", "17.6"], ["12", "484.4", "17.7"]]}]};
+const M = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const naira = v => v>=1e9 ? "₦"+(v/1e9).toFixed(2)+"bn" : v>=1e6 ? "₦"+(v/1e6).toFixed(1)+"m" : "₦"+Math.round(v).toLocaleString();
+const num = v => Math.round(v).toLocaleString();
+const $ = id => document.getElementById(id);
+const kpi = (v,l,w) => `<div class="kpi${w?' warn':''}"><b>${v}</b><span>${l}</span></div>`;
+const tok = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+let charts = {};
+function mk(id, cfg){ if(charts[id]) charts[id].destroy(); charts[id] = new Chart($(id), cfg); }
+function base(extra={}){
+  const ink=tok('--muted'), grid=tok('--line');
+  return Object.assign({responsive:true,maintainAspectRatio:false,animation:{duration:400},
+    plugins:{legend:{labels:{color:ink,font:{family:'JetBrains Mono',size:11},boxWidth:12}}},
+    scales:{x:{ticks:{color:ink,font:{size:11}},grid:{display:false},border:{color:grid}},
+            y:{ticks:{color:ink,font:{size:11}},grid:{color:grid},border:{display:false},beginAtZero:true}}},extra);
+}
+function noLegend(o){o.plugins.legend.display=false;return o}
+
+// ---- Project 1
+const fSel=$('fraudChannel'); Object.keys(D.fraud.views).forEach(k=>fSel.add(new Option(k,k)));
+function drawFraud(){
+  const v=D.fraud.views[fSel.value], k=v.kpi;
+  $('fraudKpis').innerHTML = kpi(num(k.txns),'transactions')+kpi(naira(k.value),'value processed')+
+    kpi(num(k.fraud)+' <small style="font-size:.9rem">('+k.rate.toFixed(2)+'%)</small>','fraud cases',1)+kpi(k.recovery_rate.toFixed(1)+'%','of lost money recovered');
+  const A=tok('--accent'),F=tok('--flag');
+  mk('fMonthly',{type:'bar',data:{labels:M,datasets:[{label:'Cases',data:v.monthly_fraud,backgroundColor:F,borderRadius:3}]},options:noLegend(base())});
+  mk('fMoney',{type:'bar',data:{labels:M,datasets:[{label:'Lost',data:v.monthly_fv,backgroundColor:F,borderRadius:3},{label:'Recovered',data:v.monthly_rv,backgroundColor:A,borderRadius:3}]},options:base()});
+  mk('fHour',{type:'line',data:{labels:[...Array(24).keys()].map(h=>String(h).padStart(2,'0')),datasets:[{data:v.hourly_rate,borderColor:F,backgroundColor:tok('--flag-soft'),fill:true,tension:.3,pointRadius:0,borderWidth:2}]},options:noLegend(base())});
+  mk('fBand',{type:'bar',data:{labels:D.fraud.bands,datasets:[{data:v.band_rate,backgroundColor:A,borderRadius:3}]},options:noLegend(base())});
+}
+fSel.onchange=drawFraud;
+const fr=D.fraud, topCh=fr.channel_rank[0];
+$('fraudFind').innerHTML=`<div class="f"><b>${(fr.night_rate/fr.day_rate).toFixed(1)}× higher</b>Fraud rate between 11pm and 5am (${fr.night_rate.toFixed(2)}%) than in the day (${fr.day_rate.toFixed(2)}%). Night-time step-up checks would target the riskiest window.</div>
+<div class="f"><b>${(fr.newdev_rate/fr.olddev_rate).toFixed(1)}× higher</b>Fraud rate on transactions from a newly registered device. A device-change alert is the single cheapest control.</div>
+<div><b>${topCh.channel}</b>Highest fraud rate of any channel at ${topCh.rate.toFixed(2)}%, ${(topCh.rate/fr.channel_rank.at(-1).rate).toFixed(1)}× the safest channel (${fr.channel_rank.at(-1).channel}). New accounts under 90 days old are ${(fr.young_rate/fr.old_rate).toFixed(1)}× riskier too.</div>`;
+
+// ---- Project 2
+const C=D.cleaning;
+$('cleanKpis').innerHTML=kpi(num(C.raw_rows),'rows received')+kpi(Object.values(C.issues).reduce((a,b)=>a+b,0).toLocaleString(),'problems fixed',1)+kpi(C.quality_before+'% → '+C.quality_after+'%','data quality score')+kpi(num(C.dup_removed),'duplicates removed');
+function drawClean(){
+  const A=tok('--accent'),F=tok('--flag'),L=tok('--line');
+  const iss=Object.entries(C.issues).sort((a,b)=>b[1]-a[1]);
+  mk('cIssues',{type:'bar',data:{labels:iss.map(i=>i[0]),datasets:[{data:iss.map(i=>i[1]),backgroundColor:F,borderRadius:3}]},options:noLegend(base({indexAxis:'y'}))});
+  const f=Object.keys(C.q_before);
+  mk('cQuality',{type:'bar',data:{labels:f.map(s=>s[0].toUpperCase()+s.slice(1)),datasets:[{label:'Before',data:f.map(k=>C.q_before[k]),backgroundColor:L,borderRadius:3},{label:'After',data:f.map(k=>C.q_after[k]),backgroundColor:A,borderRadius:3}]},options:base()});
+}
+const hd=['ID','First','Last','State','Phone','Date of birth','Balance'];
+function tbl(rows,other,cls){return '<tr>'+hd.map(h=>`<th>${h}</th>`).join('')+'</tr>'+rows.map((r,i)=>'<tr>'+r.map((c,j)=>`<td class="${j&&String(c)!==String(other[i][j])?cls:''}">${String(c).replace(/^ +| +$/g,m=>'·'.repeat(m.length))}</td>`).join('')+'</tr>').join('')}
+$('tRaw').innerHTML=tbl(C.sample_raw,C.sample_clean,'bad');
+$('tClean').innerHTML=tbl(C.sample_clean,C.sample_raw,'ok');
+$('cleanFind').innerHTML=`<div><b>100% accurate</b>Every corrected name, state, phone, date and balance matched the source record when I checked them all, so the cleaning added no new errors.</div>
+<div><b>${C.quality_before}% → ${C.quality_after}%</b>Share of fields passing validation rules. Phone numbers went from ${C.q_before.phone}% to 100% in one standard +234 format.</div>
+<div class="f"><b>${num(C.follow_up)} flagged</b>Records with a missing or invalid email were flagged for follow-up instead of being guessed, so nothing was invented.</div>`;
+
+// ---- Project 3
+const sSel=$('salesRegion'); Object.keys(D.sales.views).forEach(k=>sSel.add(new Option(k,k)));
+function drawSales(){
+  const v=D.sales.views[sSel.value],k=v.kpi,A=tok('--accent'),F=tok('--flag');
+  $('salesKpis').innerHTML=kpi(naira(k.revenue),'total revenue')+kpi(num(k.orders),'orders')+kpi(naira(k.aov),'average order value')+kpi(num(k.units),'units sold');
+  mk('sMonthly',{type:'line',data:{labels:M,datasets:[{data:v.monthly,borderColor:A,backgroundColor:tok('--accent-soft'),fill:true,tension:.3,pointRadius:3,pointBackgroundColor:A,borderWidth:2}]},options:noLegend(base())});
+  const c=Object.entries(v.by_cat), r=Object.entries(v.by_region);
+  mk('sCat',{type:'bar',data:{labels:c.map(x=>x[0]),datasets:[{data:c.map(x=>x[1]),backgroundColor:A,borderRadius:3}]},options:noLegend(base({indexAxis:'y'}))});
+  mk('sReg',{type:'bar',data:{labels:r.map(x=>x[0]),datasets:[{data:r.map(x=>x[1]),backgroundColor:r.map(x=>x[0]===sSel.value?F:A),borderRadius:3}]},options:noLegend(base({indexAxis:'y'}))});
+}
+sSel.onchange=drawSales;
+const S=D.sales, all=S.views['All regions'], cats=Object.entries(all.by_cat), regs=Object.entries(all.by_region);
+const phones=cats[0][1]/cats.reduce((a,b)=>a+b[1],0)*100, lagos=regs[0][1]/regs.reduce((a,b)=>a+b[1],0)*100;
+$('salesFind').innerHTML=`<div><b>${S.q4_share}% in Q4</b>${M[S.best_month-1]} is the peak month and ${M[S.worst_month-1]} the weakest. Stock and staffing plans should lean into October to December.</div>
+<div><b>${phones.toFixed(0)}% from ${cats[0][0]}</b>One category carries the business. Bundling accessories with phones is the clearest growth lever.</div>
+<div class="f"><b>Discounts cut order value</b>Discounted orders averaged ${naira(S.disc_aov)} vs ${naira(S.nodisc_aov)} at full price. ${regs[0][0]} alone brings ${lagos.toFixed(0)}% of revenue.</div>`;
+
+// ---- Project 4
+const MD=D.model, best=MD.models[MD.best];
+$('modelKpis').innerHTML=kpi(best.auc.toFixed(2),'ROC-AUC score (1.0 = perfect)')+kpi(best.recall+'%','of fraud caught in top 5%')+kpi((best.precision/MD.base_rate).toFixed(1)+'×','better than random review')+kpi(num(MD.test_size),'unseen test transactions');
+function drawModel(){
+  const imp=Object.entries(MD.importance);
+  mk('mImp',{type:'bar',data:{labels:imp.map(x=>x[0]),datasets:[{data:imp.map(x=>x[1]),backgroundColor:tok('--accent'),borderRadius:3}]},options:noLegend(base({indexAxis:'y'}))});
+}
+const [tn,fp,fn,tp]=best.cm;
+$('cmTitle').textContent='Results on test data · '+MD.best;
+$('cm').innerHTML=`<div class="h"></div><div class="h">Flagged</div><div class="h">Not flagged</div>
+<div class="h">Fraud</div><div class="tp">${tp}<br><small>caught</small></div><div class="fn">${fn}<br><small>missed</small></div>
+<div class="h">Genuine</div><div>${num(fp)}<br><small>false alarms</small></div><div>${num(tn)}<br><small>correctly cleared</small></div>`;
+$('tModels').innerHTML='<tr><th>Model</th><th>AUC</th><th>Recall</th><th>Precision</th></tr>'+Object.entries(MD.models).map(([n,m])=>`<tr><td>${n}</td><td>${m.auc.toFixed(3)}</td><td>${m.recall}%</td><td>${m.precision}%</td></tr>`).join('');
+const impTop=Object.keys(MD.importance);
+$('modelFind').innerHTML=`<div><b>${best.recall}% caught</b>By reviewing only the riskiest 5% of transactions, the team finds ${tp} of ${MD.test_fraud} frauds in the test set instead of about ${Math.round(MD.test_fraud*.05)} by random checks.</div>
+<div><b>${impTop[0]} and ${impTop[1].toLowerCase()}</b>The two strongest risk signals, which matches what I saw handling real fraud cases. Models a fraud team can explain are models it will trust.</div>
+<div class="f"><b>Simple model, same result</b>Logistic regression scored as well as the random forest. I would ship the simpler one: faster, cheaper, and easier to explain to auditors.</div>`;
+
+$('sqlBlocks').innerHTML=(D.sql||[]).map(q=>`<div style="display:flex;flex-direction:column;gap:10px;min-width:0"><div class="label">${q.title}</div>
+<div class="tbl"><pre style="margin:0;padding:14px;background:var(--bg);border:1px solid var(--line);border-radius:4px;font:.8rem/1.5 var(--mono);color:var(--ink)">${q.sql.replace(/</g,'&lt;')}</pre></div>
+<div class="tbl"><table><tr>${q.cols.map(c=>`<th>${c}</th>`).join('')}</tr>${q.rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}</table></div></div>`).join('');
+function drawAll(){drawFraud();drawClean();drawSales();drawModel();}
+if(window.Chart){Chart.defaults.font.family="'Source Sans 3', system-ui, sans-serif";drawAll();}
+try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>setTimeout(drawAll,50));}catch(e){}
+new MutationObserver(()=>setTimeout(drawAll,50)).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+$('copyEmail').onclick=e=>{const b=e.currentTarget;navigator.clipboard.writeText('mikeenejere8@gmail.com').then(()=>b.textContent='Copied').catch(()=>b.textContent='mikeenejere8@gmail.com');};
+</script>
+
+</body>
+</html>
